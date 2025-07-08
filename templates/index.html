@@ -1,121 +1,122 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Movie Rating Prediction</title>
+    <meta charset="UTF-8">
+    <title>Movie Rating Predictor</title>
     <style>
-        body { font-family: Arial; padding: 20px; }
-        .form-container {
-            max-width: 600px;
-            margin: auto;
-            padding: 25px;
-            border: 1px solid #ccc;
-            border-radius: 8px;
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background-color: #f7f7f7;
         }
-        label { display: block; margin-top: 10px; font-weight: bold; }
-        input, select {
+        .container {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 30px;
+            max-width: 800px;
+            margin: auto;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        label {
+            font-weight: bold;
+        }
+        input[type="number"], select {
             width: 100%;
             padding: 8px;
-            margin-top: 5px;
+            margin: 10px 0 20px;
         }
-        .genre-box {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 5px;
+        .genre-checkbox {
+            display: inline-block;
+            width: 45%;
+            margin: 5px 0;
         }
-        .genre-box label { width: 45%; }
-        .note {
-            font-size: 14px;
-            color: #555;
-            margin-bottom: 10px;
-        }
-        button {
-            margin-top: 20px;
-            width: 100%;
-            padding: 10px;
+        .btn {
             background-color: #28a745;
             color: white;
+            padding: 12px 20px;
             border: none;
+            width: 100%;
             font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
         }
-        .prediction {
-            text-align: center;
+        .result {
             margin-top: 20px;
             font-size: 18px;
-            color: green;
+            color: blue;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
-    <div class="form-container">
-        <h2>Movie Rating Prediction</h2>
-        <form method="POST" action="/predict">
+<div class="container">
+    <h2>Movie Rating Predictor</h2>
+    <form action="/predict" method="POST">
 
-            <label>Budget:</label>
-            <input type="text" name="budget" required>
+        <label for="budget">Budget:</label>
+        <input type="number" step="any" name="budget" required>
 
-            <label>Revenue:</label>
-            <input type="text" name="revenue" required>
+        <label for="popularity">Popularity:</label>
+        <input type="number" step="any" name="popularity" required>
 
-            <label>Popularity:</label>
-            <input type="text" name="popularity" required>
+        <label for="vote_average">Vote Average:</label>
+        <input type="number" step="any" name="vote_average" required>
 
-            <label>Runtime:</label>
-            <input type="text" name="runtime" required>
+        <label for="vote_count">Vote Count:</label>
+        <input type="number" step="any" name="vote_count" required>
 
-            <label>Is English?</label>
-            <select name="is_english">
-                <option>Yes</option>
-                <option>No</option>
-            </select>
+        <label>Is English?</label>
+        <select name="is_english" required>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
 
-            <label>Is Released?</label>
-            <select name="is_released">
-                <option>Yes</option>
-                <option>No</option>
-            </select>
+        <label>Status (Is Released?)</label>
+        <select name="is_released" required>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
 
-            <label>Has Company in Top 10?</label>
-            <div class="note">Top 10 Companies: {{ companies | join(', ') }}</div>
-            <select name="has_top_company">
-                <option>Yes</option>
-                <option>No</option>
-            </select>
+        <label>Has Company in Top 10?</label>
+        <select name="has_company" required>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
 
-            <label>Has Country in Top 10?</label>
-            <div class="note">Top 10 Countries: {{ countries | join(', ') }}</div>
-            <select name="has_top_country">
-                <option>Yes</option>
-                <option>No</option>
-            </select>
+        <label>Has Country in Top 10?</label>
+        <select name="has_country" required>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
 
-            <label>Is Director in Top 10?</label>
-            <div class="note">Top 10 Directors: {{ directors | join(', ') }}</div>
-            <select name="is_top_director">
-                <option>Yes</option>
-                <option>No</option>
-            </select>
+        <label>Is Director in Top 10?</label>
+        <select name="is_director_top10" required>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
 
-            <label>Has Actor in Top 10?</label>
-            <div class="note">Top 10 Actors: {{ actors | join(', ') }}</div>
-            <select name="has_top_actor">
-                <option>Yes</option>
-                <option>No</option>
-            </select>
+        <label>Has Actor in Top 10?</label>
+        <select name="has_actor_top10" required>
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
 
-            <label>Select Genres:</label>
-            <div class="genre-box">
-                {% for genre in genres %}
-                    <label><input type="checkbox" name="genres" value="{{ genre }}"> {{ genre }}</label>
-                {% endfor %}
-            </div>
+        <label><strong>Select Genres:</strong></label><br>
+        <div style="display: flex; flex-wrap: wrap;">
+            {% for genre in genres %}
+                <div class="genre-checkbox">
+                    <input type="checkbox" name="genres" value="{{ genre }}"> {{ genre }}
+                </div>
+            {% endfor %}
+        </div>
 
-            <button type="submit">Predict</button>
-        </form>
+        <br>
+        <button type="submit" class="btn">Predict</button>
+    </form>
 
-        {% if prediction_text %}
-        <div class="prediction">{{ prediction_text }}</div>
-        {% endif %}
-    </div>
+    {% if prediction_text %}
+        <div class="result">{{ prediction_text }}</div>
+    {% endif %}
+</div>
 </body>
 </html>
