@@ -1,69 +1,57 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
     <title>Movie Rating Predictor</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background: #f7f7f7;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+            background-color: #f0f2f5;
+            text-align: center;
+            padding-top: 50px;
         }
-        .form-box {
-            background: white;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        form {
+            background-color: #fff;
+            display: inline-block;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
         }
-        input {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
+        input[type="number"] {
+            width: 250px;
+            padding: 8px;
+            margin: 10px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
         }
-        button {
-            width: 100%;
-            padding: 12px;
-            background-color: #28a745;
+        input[type="submit"] {
+            padding: 10px 25px;
+            background-color: #4CAF50;
             color: white;
-            font-weight: bold;
             border: none;
-            border-radius: 5px;
+            border-radius: 8px;
             cursor: pointer;
         }
-        h1 {
-            text-align: center;
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        h2 {
+            color: #333;
         }
     </style>
 </head>
 <body>
-    <div class="form-box">
-        <h1>Movie Rating Predictor</h1>
-        <form action="/predict" method="post">
-            <label>Budget</label>
-            <input type="number" step="any" name="budget" required>
+    <h1>Movie Rating Predictor</h1>
+    <form action="/predict" method="post">
+        <input type="number" step="any" name="budget" placeholder="Budget" required><br>
+        <input type="number" step="any" name="popularity" placeholder="Popularity" required><br>
+        <input type="number" step="any" name="revenue" placeholder="Revenue" required><br>
+        <input type="number" step="any" name="runtime" placeholder="Runtime" required><br>
+        <input type="submit" value="Predict">
+    </form>
 
-            <label>Popularity</label>
-            <input type="number" step="any" name="popularity" required>
-
-            <label>Revenue</label>
-            <input type="number" step="any" name="revenue" required>
-
-            <label>Runtime</label>
-            <input type="number" step="any" name="runtime" required>
-
-            <label>Vote Count</label>
-            <input type="number" step="any" name="vote_count" required>
-
-            <button type="submit">Predict Rating</button>
-        </form>
-
-        {% if prediction %}
-            <h2 style="margin-top:20px;">Prediction: {{ prediction }}</h2>
-        {% endif %}
-    </div>
+    {% if prediction_text %}
+        <h2>{{ prediction_text }}</h2>
+    {% endif %}
 </body>
 </html>
