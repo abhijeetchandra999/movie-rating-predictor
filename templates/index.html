@@ -1,122 +1,76 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
     <title>Movie Rating Predictor</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 40px;
-            background-color: #f7f7f7;
+            background: #f7f7f7;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 40px;
         }
-        .container {
-            background-color: #fff;
-            border-radius: 10px;
-            padding: 30px;
-            max-width: 800px;
-            margin: auto;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        h1 {
+            color: #333;
+        }
+        form {
+            background: #fff;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            width: 300px;
         }
         label {
+            display: block;
+            margin-top: 15px;
             font-weight: bold;
         }
-        input[type="number"], select {
+        input[type="number"] {
             width: 100%;
             padding: 8px;
-            margin: 10px 0 20px;
+            margin-top: 5px;
+            box-sizing: border-box;
         }
-        .genre-checkbox {
-            display: inline-block;
-            width: 45%;
-            margin: 5px 0;
-        }
-        .btn {
-            background-color: #28a745;
-            color: white;
-            padding: 12px 20px;
-            border: none;
+        button {
+            margin-top: 20px;
+            padding: 10px;
             width: 100%;
-            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 6px;
             cursor: pointer;
-            border-radius: 5px;
         }
         .result {
             margin-top: 20px;
-            font-size: 18px;
-            color: blue;
-            font-weight: bold;
+            font-size: 1.2em;
+            color: #007BFF;
         }
     </style>
 </head>
 <body>
-<div class="container">
-    <h2>Movie Rating Predictor</h2>
+    <h1>Movie Rating Predictor</h1>
     <form action="/predict" method="POST">
-
-        <label for="budget">Budget:</label>
+        <label for="budget">Budget</label>
         <input type="number" step="any" name="budget" required>
 
-        <label for="popularity">Popularity:</label>
+        <label for="popularity">Popularity</label>
         <input type="number" step="any" name="popularity" required>
 
-        <label for="vote_average">Vote Average:</label>
-        <input type="number" step="any" name="vote_average" required>
+        <label for="revenue">Revenue</label>
+        <input type="number" step="any" name="revenue" required>
 
-        <label for="vote_count">Vote Count:</label>
-        <input type="number" step="any" name="vote_count" required>
+        <label for="runtime">Runtime</label>
+        <input type="number" step="any" name="runtime" required>
 
-        <label>Is English?</label>
-        <select name="is_english" required>
-            <option value="Yes">Yes</option>
-            <option value="No">No</option>
-        </select>
-
-        <label>Status (Is Released?)</label>
-        <select name="is_released" required>
-            <option value="Yes">Yes</option>
-            <option value="No">No</option>
-        </select>
-
-        <label>Has Company in Top 10?</label>
-        <select name="has_company" required>
-            <option value="Yes">Yes</option>
-            <option value="No">No</option>
-        </select>
-
-        <label>Has Country in Top 10?</label>
-        <select name="has_country" required>
-            <option value="Yes">Yes</option>
-            <option value="No">No</option>
-        </select>
-
-        <label>Is Director in Top 10?</label>
-        <select name="is_director_top10" required>
-            <option value="Yes">Yes</option>
-            <option value="No">No</option>
-        </select>
-
-        <label>Has Actor in Top 10?</label>
-        <select name="has_actor_top10" required>
-            <option value="Yes">Yes</option>
-            <option value="No">No</option>
-        </select>
-
-        <label><strong>Select Genres:</strong></label><br>
-        <div style="display: flex; flex-wrap: wrap;">
-            {% for genre in genres %}
-                <div class="genre-checkbox">
-                    <input type="checkbox" name="genres" value="{{ genre }}"> {{ genre }}
-                </div>
-            {% endfor %}
-        </div>
-
-        <br>
-        <button type="submit" class="btn">Predict</button>
+        <button type="submit">Predict Rating</button>
     </form>
 
-    {% if prediction_text %}
-        <div class="result">{{ prediction_text }}</div>
+    {% if prediction %}
+        <div class="result">
+            <strong>Predicted Rating:</strong> {{ prediction }}
+        </div>
     {% endif %}
-</div>
 </body>
 </html>
