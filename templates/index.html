@@ -7,70 +7,63 @@
             font-family: Arial, sans-serif;
             background: #f7f7f7;
             display: flex;
-            flex-direction: column;
+            justify-content: center;
             align-items: center;
-            padding-top: 40px;
+            height: 100vh;
         }
-        h1 {
-            color: #333;
+        .form-box {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
         }
-        form {
-            background: #fff;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            width: 300px;
-        }
-        label {
-            display: block;
-            margin-top: 15px;
-            font-weight: bold;
-        }
-        input[type="number"] {
+        input {
             width: 100%;
-            padding: 8px;
-            margin-top: 5px;
-            box-sizing: border-box;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
         }
         button {
-            margin-top: 20px;
-            padding: 10px;
             width: 100%;
-            background-color: #4CAF50;
+            padding: 12px;
+            background-color: #28a745;
             color: white;
+            font-weight: bold;
             border: none;
-            border-radius: 6px;
+            border-radius: 5px;
             cursor: pointer;
         }
-        .result {
-            margin-top: 20px;
-            font-size: 1.2em;
-            color: #007BFF;
+        h1 {
+            text-align: center;
         }
     </style>
 </head>
 <body>
-    <h1>Movie Rating Predictor</h1>
-    <form action="/predict" method="POST">
-        <label for="budget">Budget</label>
-        <input type="number" step="any" name="budget" required>
+    <div class="form-box">
+        <h1>Movie Rating Predictor</h1>
+        <form action="/predict" method="post">
+            <label>Budget</label>
+            <input type="number" step="any" name="budget" required>
 
-        <label for="popularity">Popularity</label>
-        <input type="number" step="any" name="popularity" required>
+            <label>Popularity</label>
+            <input type="number" step="any" name="popularity" required>
 
-        <label for="revenue">Revenue</label>
-        <input type="number" step="any" name="revenue" required>
+            <label>Revenue</label>
+            <input type="number" step="any" name="revenue" required>
 
-        <label for="runtime">Runtime</label>
-        <input type="number" step="any" name="runtime" required>
+            <label>Runtime</label>
+            <input type="number" step="any" name="runtime" required>
 
-        <button type="submit">Predict Rating</button>
-    </form>
+            <label>Vote Count</label>
+            <input type="number" step="any" name="vote_count" required>
 
-    {% if prediction %}
-        <div class="result">
-            <strong>Predicted Rating:</strong> {{ prediction }}
-        </div>
-    {% endif %}
+            <button type="submit">Predict Rating</button>
+        </form>
+
+        {% if prediction %}
+            <h2 style="margin-top:20px;">Prediction: {{ prediction }}</h2>
+        {% endif %}
+    </div>
 </body>
 </html>
