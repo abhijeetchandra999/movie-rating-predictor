@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Movie Rating Prediction</title>
+    <style>
+        body { font-family: Arial; padding: 20px; }
+        .form-container {
+            max-width: 600px;
+            margin: auto;
+            padding: 25px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+        }
+        label { display: block; margin-top: 10px; font-weight: bold; }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+        }
+        .genre-box {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 5px;
+        }
+        .genre-box label { width: 45%; }
+        .note {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 10px;
+        }
+        button {
+            margin-top: 20px;
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            font-size: 16px;
+        }
+        .prediction {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 18px;
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h2>Movie Rating Prediction</h2>
+        <form method="POST" action="/predict">
+
+            <label>Budget:</label>
+            <input type="text" name="budget" required>
+
+            <label>Revenue:</label>
+            <input type="text" name="revenue" required>
+
+            <label>Popularity:</label>
+            <input type="text" name="popularity" required>
+
+            <label>Runtime:</label>
+            <input type="text" name="runtime" required>
+
+            <label>Is English?</label>
+            <select name="is_english">
+                <option>Yes</option>
+                <option>No</option>
+            </select>
+
+            <label>Is Released?</label>
+            <select name="is_released">
+                <option>Yes</option>
+                <option>No</option>
+            </select>
+
+            <label>Has Company in Top 10?</label>
+            <div class="note">Top 10 Companies: {{ companies | join(', ') }}</div>
+            <select name="has_top_company">
+                <option>Yes</option>
+                <option>No</option>
+            </select>
+
+            <label>Has Country in Top 10?</label>
+            <div class="note">Top 10 Countries: {{ countries | join(', ') }}</div>
+            <select name="has_top_country">
+                <option>Yes</option>
+                <option>No</option>
+            </select>
+
+            <label>Is Director in Top 10?</label>
+            <div class="note">Top 10 Directors: {{ directors | join(', ') }}</div>
+            <select name="is_top_director">
+                <option>Yes</option>
+                <option>No</option>
+            </select>
+
+            <label>Has Actor in Top 10?</label>
+            <div class="note">Top 10 Actors: {{ actors | join(', ') }}</div>
+            <select name="has_top_actor">
+                <option>Yes</option>
+                <option>No</option>
+            </select>
+
+            <label>Select Genres:</label>
+            <div class="genre-box">
+                {% for genre in genres %}
+                    <label><input type="checkbox" name="genres" value="{{ genre }}"> {{ genre }}</label>
+                {% endfor %}
+            </div>
+
+            <button type="submit">Predict</button>
+        </form>
+
+        {% if prediction_text %}
+        <div class="prediction">{{ prediction_text }}</div>
+        {% endif %}
+    </div>
+</body>
+</html>
